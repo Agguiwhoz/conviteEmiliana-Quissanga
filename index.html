@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celebração de Outorga — Emiliana Quissanga</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96D;
+    --gold-pale: #F5E6BB;
+    --dark: #0D0A06;
+    --dark2: #1A1409;
+    --dark3: #251D0E;
+    --brown: #2E2010;
+    --text: #F0E6CC;
+    --text-muted: #9A876A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== SPLASH SCREEN ===== */
+  #splash {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, #1A1409 0%, #0D0A06 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: pointer;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  #splash.hide {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+  }
+
+  .splash-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: float-particle linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float-particle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+  }
+
+  .cap-wrapper {
+    position: relative;
+    animation: cap-float 3s ease-in-out infinite;
+  }
+
+  @keyframes cap-float {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-18px) rotate(2deg); }
+  }
+
+  .mortarboard {
+    font-size: clamp(80px, 20vw, 130px);
+    filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.6)) drop-shadow(0 0 60px rgba(201, 168, 76, 0.3));
+    transition: transform 0.2s ease;
+    user-select: none;
+  }
+
+  .cap-glow {
+    position: absolute;
+    inset: -30px;
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  .splash-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(14px, 3.5vw, 20px);
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    margin-top: 28px;
+    text-transform: uppercase;
+    animation: fade-in-up 1s ease 0.5s both;
+  }
+
+  .splash-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 2.5vw, 15px);
+    color: var(--text-muted);
+    margin-top: 12px;
+    letter-spacing: 0.15em;
+    animation: fade-in-up 1s ease 1s both, pulse-opacity 2s ease-in-out 2s infinite;
+  }
+
+  @keyframes pulse-opacity {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .splash-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 16px auto 0;
+    animation: fade-in-up 1s ease 1.2s both;
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== MAIN INVITE ===== */
+  #invite {
+    display: none;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.05) 0%, transparent 50%),
+      linear-gradient(180deg, #0D0A06 0%, #1A1409 50%, #0D0A06 100%);
+  }
+
+  #invite.visible {
+    display: block;
+    animation: reveal 1s ease both;
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(160deg, #1E1608 0%, #150F05 40%, #1A1208 100%);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    border-radius: 4px;
+    padding: 36px 28px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(201, 168, 76, 0.08),
+      0 20px 60px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(201, 168, 76, 0.15);
+  }
+
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-color: rgba(201, 168, 76, 0.4);
+    border-style: solid;
+  }
+  .card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+  .card::after { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+  .card-inner-corners::before, .card-inner-corners::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-color: rgba(201, 168, 76, 0.4);
+    border-style: solid;
+  }
+  .card-inner-corners::before { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+  .card-inner-corners::after { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+
+  .header-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(8px, 2vw, 10px);
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .photo-frame {
+    width: clamp(110px, 28vw, 140px);
+    height: clamp(110px, 28vw, 140px);
+    margin: 0 auto 22px;
+    position: relative;
+  }
+
+  .photo-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2A1E08, #1A1208);
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15), 0 0 20px rgba(201, 168, 76, 0.2);
+    font-size: 60px;
+  }
+
+  .photo-cap {
+    position: absolute;
+    top: -12px;
+    right: -8px;
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    transform: rotate(15deg);
+  }
+
+  .graduate-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 7vw, 38px);
+    font-weight: 400;
+    color: var(--gold-pale);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+  }
+
+  .divider-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .quote-block {
+    text-align: center;
+    padding: 0 8px;
+    margin-bottom: 18px;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(13px, 3.2vw, 15px);
+    color: var(--text-muted);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+  }
+
+  .quote-ref {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(9px, 2vw, 11px);
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    margin-top: 8px;
+    opacity: 0.8;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .info-block {
+    background: rgba(201, 168, 76, 0.04);
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    border-radius: 2px;
+    padding: 14px 12px;
+  }
+
+  .info-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(7px, 1.8vw, 9px);
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .info-sub {
+    font-size: clamp(11px, 2.5vw, 13px);
+    color: var(--text-muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .dress-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #1A1A1A;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.4);
+    vertical-align: middle;
+    margin-left: 4px;
+    position: relative;
+    top: -1px;
+  }
+
+  .location-block {
+    background: rgba(201, 168, 76, 0.04);
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    border-radius: 2px;
+    padding: 16px 14px;
+    margin-bottom: 20px;
+  }
+
+  .location-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 3vw, 15px);
+    color: var(--gold-pale);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .location-address {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 3vw, 14px);
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .attention-block {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 14px;
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  }
+
+  .attention-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(8px, 2vw, 10px);
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .attention-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 3vw, 14px);
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #1a3a1a, #0f2e0f);
+    border: 1px solid rgba(37, 211, 102, 0.4);
+    border-radius: 2px;
+    color: #4ade80;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(10px, 2.5vw, 12px);
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+  }
+
+  .btn-whatsapp:hover {
+    background: linear-gradient(135deg, #1f4a1f, #143614);
+    border-color: rgba(37, 211, 102, 0.7);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .btn-confirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08));
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    border-radius: 2px;
+    color: var(--gold-pale);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(10px, 2.5vw, 12px);
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-confirm:hover {
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.15));
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 8888;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: linear-gradient(160deg, #1E1608, #150F05);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 4px;
+    padding: 36px 28px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+  }
+
+  .modal-overlay.active .modal { transform: translateY(0); }
+
+  .modal::before, .modal::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: rgba(201, 168, 76, 0.3);
+    border-style: solid;
+  }
+  .modal::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .modal::after { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 4vw, 20px);
+    color: var(--gold-pale);
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  .modal-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 3vw, 15px);
+    color: var(--text-muted);
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+
+  .modal-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(8px, 2vw, 10px);
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(201, 168, 76, 0.04);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 2px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-input:focus {
+    border-color: rgba(201, 168, 76, 0.6);
+    background: rgba(201, 168, 76, 0.07);
+  }
+
+  .form-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+
+  .guests-row { display: flex; gap: 10px; }
+
+  .btn-sub {
+    background: none;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: var(--gold);
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  .btn-sub:hover { background: rgba(201, 168, 76, 0.1); }
+
+  #guest-count { flex: 1; text-align: center; }
+
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 2px;
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-cancel:hover { border-color: rgba(201, 168, 76, 0.3); color: var(--text); }
+
+  .btn-submit {
+    flex: 2;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), rgba(201, 168, 76, 0.1));
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    color: var(--gold-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+  .btn-submit:hover {
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.35), rgba(201, 168, 76, 0.2));
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .success-message {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+
+  .success-icon { font-size: 48px; margin-bottom: 16px; }
+
+  .success-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--gold-pale);
+    margin-bottom: 8px;
+  }
+
+  .success-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .footer-ornament {
+    text-align: center;
+    margin-top: 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: rgba(201, 168, 76, 0.3);
+    text-transform: uppercase;
+  }
+
+  #splash:hover .mortarboard {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 40px rgba(201, 168, 76, 0.8)) drop-shadow(0 0 80px rgba(201, 168, 76, 0.4));
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.3);
+    transform: scale(0);
+    animation: ripple-out 0.8s ease-out;
+    pointer-events: none;
+  }
+
+  @keyframes ripple-out {
+    to { transform: scale(4); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-particles" id="particles"></div>
+  <div class="cap-wrapper">
+    <div class="cap-glow"></div>
+    <div class="mortarboard">🎓</div>
+  </div>
+  <div class="splash-title">Celebração de Outorga</div>
+  <div class="splash-line"></div>
+  <div class="splash-hint">✦ Toque para abrir o convite ✦</div>
+</div>
+
+<!-- MAIN INVITE -->
+<div id="invite">
+  <div class="card card-inner-corners">
+
+    <div class="header-label">Celebração de Outorga</div>
+
+    <div class="photo-frame">
+      <div class="photo-circle">🎓</div>
+      <div class="photo-cap">🎓</div>
+    </div>
+
+    <div class="graduate-name">Emiliana<br>Quissanga</div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="quote-block">
+      <div class="quote-text">
+        "O temor do Senhor é o princípio da sabedoria,<br>e o conhecimento do Santo é entendimento."
+      </div>
+      <div class="quote-ref">— Provérbios 9:10</div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-label">Data &amp; Hora</div>
+        <div class="info-value">29.05<span class="info-sub">.2026</span></div>
+        <div class="info-sub">Sexta-feira · 18h07</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Traje</div>
+        <div class="info-value">Preto<span class="dress-dot"></span></div>
+        <div class="info-sub"><em>Detalhes no grupo</em></div>
+      </div>
+    </div>
+
+    <div class="location-block">
+      <div class="info-label">Local</div>
+      <div class="location-name">Residência dos Pais</div>
+      <div class="location-address">
+        Zona 2, paralela à rua direita do Conjunto Municipal MINSEF<br>
+        <em>(Junto à Igreja Católica Santa Cruz)</em>
+      </div>
+    </div>
+
+    <div class="attention-block">
+      <div class="attention-label">Atenção</div>
+      <div class="attention-text">Convidado não nomeável</div>
+    </div>
+
+    <a href="https://wa.me/?text=Convite%20de%20Outorga%20de%20Emiliana%20Quissanga%20-%2029%20de%20Maio%20de%202026" 
+       class="btn-whatsapp" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#4ade80">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      PARTILHAR NO WHATSAPP
+    </a>
+
+    <button class="btn-confirm" onclick="openModal()">
+      ✦ CONFIRMAR PRESENÇA ✦
+    </button>
+
+    <div class="footer-ornament">✦ &nbsp; Com amor &nbsp; ✦</div>
+
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div id="modal-form-content">
+      <div class="modal-title">Confirmar Presença</div>
+      <div class="modal-sub">Ficaremos honrados com a sua presença</div>
+
+      <div class="modal-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="guest-name">Nome Completo</label>
+        <input class="form-input" type="text" id="guest-name" placeholder="O seu nome">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Número de Convidados</label>
+        <div class="guests-row">
+          <button class="btn-sub" onclick="changeGuests(-1)">−</button>
+          <input class="form-input" type="text" id="guest-count" value="1" readonly style="text-align:center;">
+          <button class="btn-sub" onclick="changeGuests(1)">+</button>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn-cancel" onclick="closeModal()">CANCELAR</button>
+        <button class="btn-submit" onclick="submitConfirm()">CONFIRMAR ✦</button>
+      </div>
+    </div>
+
+    <div class="success-message" id="success-msg">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Confirmado!</div>
+      <div class="success-text">
+        A sua presença foi confirmada.<br>
+        Até 29 de Maio de 2026!
+      </div>
+      <div style="margin-top:20px;">
+        <button class="btn-submit" style="width:100%;padding:14px;" onclick="closeModal()">✦ FECHAR ✦</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    container.appendChild(p);
+  }
+
+  document.getElementById('splash').addEventListener('click', function(e) {
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = '100px';
+    ripple.style.left = (e.clientX - 50) + 'px';
+    ripple.style.top = (e.clientY - 50) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 800);
+
+    this.classList.add('hide');
+    setTimeout(() => {
+      this.style.display = 'none';
+      const inv = document.getElementById('invite');
+      inv.style.display = 'block';
+      setTimeout(() => inv.classList.add('visible'), 10);
+    }, 800);
+  });
+
+  let guestNum = 1;
+  function changeGuests(d) {
+    guestNum = Math.max(1, Math.min(10, guestNum + d));
+    document.getElementById('guest-count').value = guestNum;
+  }
+
+  function openModal() {
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+    setTimeout(() => {
+      document.getElementById('modal-form-content').style.display = 'block';
+      document.getElementById('success-msg').style.display = 'none';
+      document.getElementById('guest-name').value = '';
+      guestNum = 1;
+      document.getElementById('guest-count').value = 1;
+    }, 400);
+  }
+
+  function submitConfirm() {
+    const name = document.getElementById('guest-name').value.trim();
+    if (!name) {
+      document.getElementById('guest-name').style.borderColor = 'rgba(201,100,76,0.8)';
+      document.getElementById('guest-name').focus();
+      return;
+    }
+    document.getElementById('modal-form-content').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
